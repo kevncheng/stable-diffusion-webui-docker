@@ -21,17 +21,18 @@ RUN apk add --no-cache aria2
 RUN aria2c -x 5 --dir / --out wheel.whl 'https://github.com/AbdBarho/stable-diffusion-webui-docker/releases/download/6.0.0/xformers-0.0.21.dev544-cp310-cp310-manylinux2014_x86_64-pytorch201.whl'
 
 
-FROM python:3.10.9-slim
+FROM nvidia/cuda:11.7.1-base-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
 RUN --mount=type=cache,target=/var/cache/apt \
   apt-get update && \
   # we need those
-  apt-get install -y fonts-dejavu-core rsync git jq moreutils aria2 \
+  apt-get install -y fonts-dejavu-core rsync git jq moreutils aria2 ython3-pip python3.10 nvidia-cudnn \
   # extensions needs those
   ffmpeg libglfw3-dev libgles2-mesa-dev pkg-config libcairo2 libcairo2-dev build-essential
 
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip \
   aria2c -x 5 --dir /cache --out torch-2.0.1-cp310-cp310-linux_x86_64.whl -c \

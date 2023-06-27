@@ -32,6 +32,7 @@ services:
     image: sd-auto:61
     environment:
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+      - NVIDIA_VISIBLE_DEVICES=all
 
   auto-cpu:
     <<: *automatic
