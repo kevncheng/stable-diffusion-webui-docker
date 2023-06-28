@@ -29,7 +29,7 @@ ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 RUN --mount=type=cache,target=/var/cache/apt \
   apt-get update && \
   # we need those
-  apt-get install -y fonts-dejavu-core rsync git jq moreutils python3 python3-dev python3-pip python3-venv git aria2 nvidia-cudnn \
+  apt-get install -y fonts-dejavu-core rsync git jq moreutils python3 python3-dev python3-pip python3-venv git aria2 nvidia-cudnn wget \
   # extensions needs those
   ffmpeg libglfw3-dev libgles2-mesa-dev pkg-config libcairo2 libcairo2-dev build-essential
 
@@ -89,8 +89,15 @@ RUN \
   # git config --global --add safe.directory '*'
 
 WORKDIR ${ROOT}
+
+
 ENV NVIDIA_VISIBLE_DEVICES=all
-ENV CLI_ARGS=""
+ENV CLI_ARGS="--allow-code --xformers --enable-insecure-extension-access --api"
 EXPOSE 7860
+
+RUN wget https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.safetensors
+# Move the file to the desired location
+RUN mv Realistic_Vision_V2.0.safetensors models/Stable-diffusion
+
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python3 -u webui.py --listen --port 7860 ${CLI_ARGS}
