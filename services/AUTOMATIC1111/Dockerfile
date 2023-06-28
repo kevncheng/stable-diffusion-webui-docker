@@ -21,18 +21,17 @@ RUN apk add --no-cache aria2
 RUN aria2c -x 5 --dir / --out wheel.whl 'https://github.com/AbdBarho/stable-diffusion-webui-docker/releases/download/6.0.0/xformers-0.0.21.dev544-cp310-cp310-manylinux2014_x86_64-pytorch201.whl'
 
 
-FROM nvidia/cuda:11.7.1-base-ubuntu22.04
+# FROM nvidia/cuda:11.7.1-base-ubuntu22.04
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
 RUN --mount=type=cache,target=/var/cache/apt \
   apt-get update && \
   # we need those
-  apt-get install -y fonts-dejavu-core rsync git jq moreutils aria2 ython3-pip python3.10 nvidia-cudnn \
+  apt-get install -y fonts-dejavu-core rsync git jq moreutils python3 python3-dev python3-pip python3-venv git aria2 nvidia-cudnn \
   # extensions needs those
   ffmpeg libglfw3-dev libgles2-mesa-dev pkg-config libcairo2 libcairo2-dev build-essential
-
-RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip \
   aria2c -x 5 --dir /cache --out torch-2.0.1-cp310-cp310-linux_x86_64.whl -c \
@@ -42,16 +41,16 @@ RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip 
 
 
 RUN --mount=type=cache,target=/root/.cache/pip \
-  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
-  cd stable-diffusion-webui && \
-  git reset --hard 20ae71faa8ef035c31aa3a410b707d792c8203a3 && \
+  git clone https://github.com/kevncheng/stable-diffusion.git && \
+  cd stable-diffusion && \
+  git checkout cl-sd && \
   pip install -r requirements_versions.txt
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
   --mount=type=bind,from=xformers,source=/wheel.whl,target=/xformers-0.0.21.dev544-cp310-cp310-manylinux2014_x86_64.whl \
   pip install /xformers-0.0.21.dev544-cp310-cp310-manylinux2014_x86_64.whl
 
-ENV ROOT=/stable-diffusion-webui
+ENV ROOT=/stable-diffusion
 
 
 COPY --from=download /repositories/ ${ROOT}/repositories/
@@ -74,23 +73,24 @@ ENV LD_PRELOAD=libtcmalloc.so
 
 ARG SHA=20ae71faa8ef035c31aa3a410b707d792c8203a3
 RUN --mount=type=cache,target=/root/.cache/pip \
-  cd stable-diffusion-webui && \
+  cd stable-diffusion && \
   git fetch && \
-  git reset --hard ${SHA} && \
+  git checkout cl-sd && \
   pip install -r requirements_versions.txt
 
 COPY . /docker
 
 RUN \
   python3 /docker/info.py ${ROOT}/modules/ui.py && \
-  mv ${ROOT}/style.css ${ROOT}/user.css && \
+  mv ${ROOT}/style.css ${ROOT}/user.css
+  #  && \
   # one of the ugliest hacks I ever wrote \
-  sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py && \
-  git config --global --add safe.directory '*'
+  # sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/dist-packages/gradio/routes.py && \
+  # git config --global --add safe.directory '*'
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV CLI_ARGS=""
 EXPOSE 7860
 ENTRYPOINT ["/docker/entrypoint.sh"]
-CMD python -u webui.py --listen --port 7860 ${CLI_ARGS}
+CMD python3 -u webui.py --listen --port 7860 ${CLI_ARGS}
