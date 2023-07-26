@@ -1,7 +1,5 @@
 https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt
   out=Stable-diffusion/v1-5-pruned-emaonly.ckpt
-https://storage.googleapis.com/sd-models-public/sd-v1-5-inpainting.ckpt
-  out=Stable-diffusion/sd-v1-5-inpainting.ckpt
 https://storage.googleapis.com/sd-models-public/realisticVisionV40-inpainting.inpainting.safetensors
   out=Stable-diffusion/realisticVisionV40-inpainting.inpainting.safetensors
 https://storage.googleapis.com/sd-models-public/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
