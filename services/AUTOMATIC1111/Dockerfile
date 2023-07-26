@@ -94,10 +94,5 @@ WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV CLI_ARGS="--allow-code --xformers --enable-insecure-extension-access --api"
 EXPOSE 7860
-
-RUN wget https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.safetensors
-# Move the file to the desired location
-RUN mv Realistic_Vision_V2.0.safetensors models/Stable-diffusion
-
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python3 -u webui.py --listen --port 7860 ${CLI_ARGS}

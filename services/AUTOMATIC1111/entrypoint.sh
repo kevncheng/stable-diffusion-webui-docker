@@ -2,6 +2,52 @@
 
 set -Eeuo pipefail
 
+# TODO: maybe just use the .gitignore file to create all of these
+mkdir -vp /data/.cache \
+  /data/embeddings \
+  /data/config/ \
+  /data/models/ \
+  /data/models/Stable-diffusion \
+  /data/models/GFPGAN \
+  /data/models/RealESRGAN \
+  /data/models/LDSR \
+  /data/models/VAE
+
+echo "Downloading, this might take a while..."
+
+aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data/models --continue
+
+# The target directory where the repository will be cloned or updated
+target_dir="/data/config/auto/extensions"
+
+# # Check if the target directory exists
+# if [ -d "$target_dir" ]; then
+#   # If it exists, remove the existing repository
+#   echo "Removing existing repository..."
+#   rm -rf "$target_dir"
+# fi
+
+# # Clone the repository from GitHub
+# echo "Cloning repository..."
+# # cd "$target_dir/depthmap2mask" && git checkout --hard 377e9224
+# # Check if the target directory exists
+# if [! -d "$target_dir/depthmap2mask" ]; then
+#   # If it exists, remove the existing repository
+#   # echo "Removing existing repository..."
+#   # rm -rf "$target_dir"
+#   git clone https://github.com/Extraltodeus/depthmap2mask.git "$target_dir"
+# fi
+
+if [ ! -d "$target_dir/stable-diffusion-webui-rembg" ]; then
+  # If it exists, remove the existing repository
+  # echo "Removing existing repository..."
+  # rm -rf "$target_dir"
+  # Clone the repository from GitHub
+  echo "Cloning repository..."
+  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg"
+  # cd "$target_dir/depthmap2mask" && git checkout --hard 3d9eedbb
+fi
+
 # TODO: move all mkdir -p ?
 mkdir -p /data/config/auto/scripts/
 # mount scripts individually
@@ -62,7 +108,7 @@ shopt -s nullglob
 # For install.py, please refer to https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Developing-extensions#installpy
 list=(./extensions/*/install.py)
 for installscript in "${list[@]}"; do
-  PYTHONPATH=${ROOT} python "$installscript"
+  PYTHONPATH=${ROOT} python3 "$installscript"
 done
 
 if [ -f "/data/config/auto/startup.sh" ]; then
