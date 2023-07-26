@@ -1,9 +1,11 @@
 https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt
   out=Stable-diffusion/v1-5-pruned-emaonly.ckpt
-https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.safetensors
-  out=Stable-diffusion/Realistic_Vision_V2.0.safetensors
-https://huggingface.co/dreamlike-art/dreamlike-photoreal-2.0/resolve/main/dreamlike-photoreal-2.0.safetensors
-  out=Stable-diffusion/dreamlike-photoreal-2.0.safetensors
+https://storage.googleapis.com/sd-models-public/sd-v1-5-inpainting.ckpt
+  out=Stable-diffusion/sd-v1-5-inpainting.ckpt
+https://storage.googleapis.com/sd-models-public/realisticVisionV40-inpainting.inpainting.safetensors
+  out=Stable-diffusion/realisticVisionV40-inpainting.inpainting.safetensors
+https://storage.googleapis.com/sd-models-public/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
+  out=Stable-diffusion/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
 https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt
   out=VAE/vae-ft-mse-840000-ema-pruned.ckpt
 https://huggingface.co/runwayml/stable-diffusion-inpainting/resolve/main/sd-v1-5-inpainting.ckpt
