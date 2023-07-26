@@ -20,32 +20,14 @@ aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data/models --
 # The target directory where the repository will be cloned or updated
 target_dir="/data/config/auto/extensions"
 
-# # Check if the target directory exists
-# if [ -d "$target_dir" ]; then
-#   # If it exists, remove the existing repository
-#   echo "Removing existing repository..."
-#   rm -rf "$target_dir"
-# fi
-
-# # Clone the repository from GitHub
-# echo "Cloning repository..."
-# # cd "$target_dir/depthmap2mask" && git checkout --hard 377e9224
-# # Check if the target directory exists
-# if [! -d "$target_dir/depthmap2mask" ]; then
-#   # If it exists, remove the existing repository
-#   # echo "Removing existing repository..."
-#   # rm -rf "$target_dir"
-#   git clone https://github.com/Extraltodeus/depthmap2mask.git "$target_dir"
-# fi
+if [ ! -d "$target_dir/depthmap2mask" ]; then
+  echo "Adding depthmap2mask script..."
+   git clone https://github.com/Extraltodeus/depthmap2mask.git "$target_dir/depthmap2mask"
+fi
 
 if [ ! -d "$target_dir/stable-diffusion-webui-rembg" ]; then
-  # If it exists, remove the existing repository
-  # echo "Removing existing repository..."
-  # rm -rf "$target_dir"
-  # Clone the repository from GitHub
-  echo "Cloning repository..."
+  echo "Adding rembg extension..."
   git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg"
-  # cd "$target_dir/depthmap2mask" && git checkout --hard 3d9eedbb
 fi
 
 # TODO: move all mkdir -p ?
