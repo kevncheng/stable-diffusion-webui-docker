@@ -1,5 +1,17 @@
 https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt
   out=Stable-diffusion/v1-5-pruned-emaonly.ckpt
+https://storage.googleapis.com/sd-models-public/realisticVisionV40-inpainting.inpainting.safetensors
+  out=Stable-diffusion/realisticVisionV40-inpainting.inpainting.safetensors
+https://storage.googleapis.com/sd-models-public/realisticVisionV40_v40VAE.safetensors
+  out=Stable-diffusion/realisticVisionV40_v40VAE.safetensors
+https://storage.googleapis.com/sd-models-public/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
+  out=Stable-diffusion/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
+https://storage.googleapis.com/sd-models-public/realisticVisionV51_v51VAE.safetensors
+  out=Stable-diffusion/realisticVisionV51_v51VAE.safetensors
+https://storage.googleapis.com/sd-models-public/realisticVisionV51_v51VAE-inpainting.safetensors
+  out=Stable-diffusion/realisticVisionV51_v51VAE-inpainting.safetensors
+https://storage.googleapis.com/sd-models-public/dreamlike-photoreal-2.0.ckpt
+  out=Stable-diffusion/dreamlike-photoreal-2.0.ckpt
 https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt
   out=VAE/vae-ft-mse-840000-ema-pruned.ckpt
 https://huggingface.co/runwayml/stable-diffusion-inpainting/resolve/main/sd-v1-5-inpainting.ckpt
