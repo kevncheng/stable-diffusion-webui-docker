@@ -15,9 +15,9 @@ mkdir -vp /data/.cache \
 
 echo "Downloading, this might take a while..."
 # Check if the directory already exists
-if [ ! -d "/app/models" ]; then
+if [ ! -d "/app/stablediffusion-pvc/models" ]; then
     # Create the directory if it doesn't exist
-    mkdir -p "/app/models"
+    mkdir -p "/app/stablediffusion-pvc/models"
 fi
 
 # aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/models --continue
@@ -37,6 +37,21 @@ if [ ! -d "$target_dir/stable-diffusion-webui-rembg" ]; then
   echo "Adding rembg extension..."
   git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg"
 fi
+
+if [ ! -d "$target_dir/PBRemTools" ]; then
+  echo "Adding PBRemTools extension..."
+  git clone https://github.com/mattyamonaca/PBRemTools.git "$target_dir/PBRemTools"
+fi
+
+if [ ! -d "$target_dir/sd-webui-controlnet" ]; then
+  echo "Adding sd-webui-controlnet extension..."
+  git clone https://github.com/Mikubill/sd-webui-controlnet.git "$target_dir/sd-webui-controlnet"
+ 
+  # git clone https://huggingface.co/lllyasviel/ControlNet-v1-1 --force "$target_dir/sd-webui-controlnet/models"
+fi
+
+echo "Adding extension models..."
+aria2c -x 10 --disable-ipv6 --input-file /docker/extension_links.txt --dir $target_dir --auto-file-renaming=false --continue
 
 # TODO: move all mkdir -p ?
 mkdir -p /data/config/auto/scripts/
@@ -71,10 +86,10 @@ MOUNTS["/root/.cache"]="/data/.cache"
 # MOUNTS["/app/models"]="/data/models"
 # Create the symlink if the target directory exists
 if [ -d "/app/stablediffusion-pvc" ]; then
-    # ln -s /stable-diffusion/models/* /app/stabledifusion-pvc/models
+    # ln -s /stable-diffusion/models ~/app/stablediffusion-pvc/models
 
     # Grant administrative permissions to the directory
-    chmod -R 777 "/app/models"
+    chmod -R 777 "/app/stablediffusion-pvc"
 else
     echo "Error: Failed to create directory /app/stablediffusion-pvc"
 fi
