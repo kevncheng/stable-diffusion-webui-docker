@@ -20,7 +20,10 @@ if [ ! -d "/app/models" ]; then
     mkdir -p "/app/models"
 fi
 
-aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/models --continue
+# aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/models --continue
+# Download models, check if file already exist
+# If does not exist then download file
+aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/stablediffusion-pvc --auto-file-renaming=false --continue
 
 # The target directory where the repository will be cloned or updated
 target_dir="/data/config/auto/extensions"
@@ -65,15 +68,15 @@ MOUNTS["/root/.cache"]="/data/.cache"
 
 # ln -s "${ROOT}/models" /app/Stable-diffusion/models
 # Mount models to pvc
-MOUNTS["/app/models"]="/data/models"
+# MOUNTS["/app/models"]="/data/models"
 # Create the symlink if the target directory exists
-if [ -d "/app/models" ]; then
-    ln -s "/stable-diffusion/models" "/app/models"
+if [ -d "/app/stablediffusion-pvc" ]; then
+    # ln -s /stable-diffusion/models/* /app/stabledifusion-pvc/models
 
     # Grant administrative permissions to the directory
     chmod -R 777 "/app/models"
 else
-    echo "Error: Failed to create directory /app/Stable-diffusion/models"
+    echo "Error: Failed to create directory /app/stablediffusion-pvc"
 fi
 
 MOUNTS["${ROOT}/embeddings"]="/data/embeddings"
