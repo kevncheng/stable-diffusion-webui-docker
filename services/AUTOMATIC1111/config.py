@@ -19,6 +19,7 @@ DEFAULT_OUTDIRS = {
   "outdir_img2img_grids": "/output/img2img-grids",
   "outdir_save": "/output/saved",
   "outdir_init_images": "/output/init-images",
+  "samples_save": false
 }
 RE_VALID_OUTDIR = re.compile(r"(^/output(/\.?[\w\-\_]+)+/?$)|(^\s?$)")
 

@@ -14,8 +14,13 @@ mkdir -vp /data/.cache \
   /data/models/VAE
 
 echo "Downloading, this might take a while..."
+# Check if the directory already exists
+if [ ! -d "/app/models" ]; then
+    # Create the directory if it doesn't exist
+    mkdir -p "/app/models"
+fi
 
-aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data/models --continue
+aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/models --continue
 
 # The target directory where the repository will be cloned or updated
 target_dir="/data/config/auto/extensions"
@@ -56,7 +61,20 @@ rsync -a --info=NAME ${ROOT}/models/karlo/ /data/models/karlo/
 declare -A MOUNTS
 
 MOUNTS["/root/.cache"]="/data/.cache"
-MOUNTS["${ROOT}/models"]="/data/models"
+# MOUNTS["${ROOT}/models"]="/data/models"
+
+# ln -s "${ROOT}/models" /app/Stable-diffusion/models
+# Mount models to pvc
+MOUNTS["/app/models"]="/data/models"
+# Create the symlink if the target directory exists
+if [ -d "/app/models" ]; then
+    ln -s "/stable-diffusion/models" "/app/models"
+
+    # Grant administrative permissions to the directory
+    chmod -R 777 "/app/models"
+else
+    echo "Error: Failed to create directory /app/Stable-diffusion/models"
+fi
 
 MOUNTS["${ROOT}/embeddings"]="/data/embeddings"
 MOUNTS["${ROOT}/config.json"]="/data/config/auto/config.json"

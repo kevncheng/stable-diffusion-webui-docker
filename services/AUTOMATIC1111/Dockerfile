@@ -92,7 +92,7 @@ WORKDIR ${ROOT}
 
 
 ENV NVIDIA_VISIBLE_DEVICES=all
-ENV CLI_ARGS="--allow-code --xformers --enable-insecure-extension-access --api"
+ENV CLI_ARGS='--allow-code --xformers --enable-insecure-extension-access --api --opt-sdp-attention --ckpt-dir "/app/models/Stable-diffusion"'
 EXPOSE 7860
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python3 -u webui.py --listen --port 7860 ${CLI_ARGS}
