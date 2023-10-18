@@ -86,7 +86,7 @@ MOUNTS["/root/.cache"]="/data/.cache"
 # MOUNTS["/app/models"]="/data/models"
 # Create the symlink if the target directory exists
 if [ -d "/app/stablediffusion-pvc" ]; then
-    # ln -s /stable-diffusion/models ~/app/stablediffusion-pvc/models
+    ln -s /stable-diffusion/models /app/stablediffusion-pvc/models
 
     # Grant administrative permissions to the directory
     chmod -R 777 "/app/stablediffusion-pvc"
