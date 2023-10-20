@@ -46,8 +46,11 @@ fi
 if [ ! -d "$target_dir/sd-webui-controlnet" ]; then
   echo "Adding sd-webui-controlnet extension..."
   git clone https://github.com/Mikubill/sd-webui-controlnet.git "$target_dir/sd-webui-controlnet"
- 
-  # git clone https://huggingface.co/lllyasviel/ControlNet-v1-1 --force "$target_dir/sd-webui-controlnet/models"
+fi
+
+if [ ! -d "$target_dir/ultimate-upscale-for-automatic1111" ]; then
+  echo "Adding ultimate sd upscale..."
+  git clone https://github.com/Coyote-A/ultimate-upscale-for-automatic1111.git "$target_dir/ultimate-upscale-for-automatic1111"
 fi
 
 echo "Adding extension models..."
@@ -86,7 +89,7 @@ MOUNTS["/root/.cache"]="/data/.cache"
 # MOUNTS["/app/models"]="/data/models"
 # Create the symlink if the target directory exists
 if [ -d "/app/stablediffusion-pvc" ]; then
-    ln -s /stable-diffusion/models /app/stablediffusion-pvc/models
+    # ln -s /stable-diffusion/models /app/stablediffusion-pvc/models
 
     # Grant administrative permissions to the directory
     chmod -R 777 "/app/stablediffusion-pvc"
