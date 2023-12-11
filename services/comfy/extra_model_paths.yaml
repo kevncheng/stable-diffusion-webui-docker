@@ -1,10 +1,12 @@
 a111:
-  base_path: /data
+  base_path: /app/data
 
   checkpoints: models/Stable-diffusion
   configs: models/Stable-diffusion
   vae: models/VAE
   loras: models/Lora
+  grounding-dino: models/grounding-dino
+  sams: models/sams
   upscale_models: |
     models/RealESRGAN
     models/ESRGAN

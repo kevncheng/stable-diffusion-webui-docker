@@ -2,13 +2,48 @@
 
 set -Eeuo pipefail
 
-mkdir -vp /data/config/comfy/custom_nodes
+mkdir -vp /app/data/config/comfy/custom_nodes
 
 declare -A MOUNTS
 
-MOUNTS["/root/.cache"]="/data/.cache"
-MOUNTS["${ROOT}/input"]="/data/config/comfy/input"
+MOUNTS["/root/.cache"]="/app/data/.cache"
+MOUNTS["${ROOT}/input"]="/app/data/config/comfy/input"
 MOUNTS["${ROOT}/output"]="/output/comfy"
+
+# echo "Downloading, this might take a while..."
+# # Check if the directory already exists
+# if [ ! -d "/app/stablediffusion-pvc/models" ]; then
+#     # Create the directory if it doesn't exist
+#     mkdir -p "/app/stablediffusion-pvc/models"
+# fi
+
+# The target directory where the repository will be cloned or updated
+target_dir="/app/data/config/comfy"
+
+# Custom nodes
+if [ ! -d "$target_dir/custom_nodes/ComfyUI_UltimateSDUpscale" ]; then
+  echo "Adding ultimate sd upscale..."
+  git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale --recursive "$target_dir/custom_nodes/ComfyUI_UltimateSDUpscale"
+  # Install requirements from requirements.txt in the cloned directory
+  echo "Installing requirements from the cloned directory..."
+  # pip install -r "$target_dir/custom_nodes/ComfyUI_UltimateSDUpscale/requirements.txt"
+fi
+
+if [ ! -d "$target_dir/custom_nodes/comfyui_segment_anything" ]; then
+  echo "Adding comyfyui segment anything..."
+  git clone https://github.com/storyicon/comfyui_segment_anything "$target_dir/custom_nodes/comfyui_segment_anything"
+  # Install requirements from requirements.txt in the cloned directory
+  echo "Installing requirements from the cloned directory..."
+  pip install -r "$target_dir/custom_nodes/comfyui_segment_anything/requirements.txt"
+fi
+
+if [ ! -d "$target_dir/custom_nodes/was-node-suite-comfyui" ]; then
+  echo "Adding was-node-suite-comfyui..."
+  git clone https://github.com/WASasquatch/was-node-suite-comfyui.git "$target_dir/custom_nodes/was-node-suite-comfyui"
+  # Install requirements from requirements.txt in the cloned directory
+  echo "Installing requirements from the cloned directory..."
+  pip install -r "$target_dir/custom_nodes/was-node-suite-comfyui/requirements.txt"
+fi
 
 for to_path in "${!MOUNTS[@]}"; do
   set -Eeuo pipefail
