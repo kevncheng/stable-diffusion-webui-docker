@@ -1,34 +1,34 @@
 https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV40-inpainting.inpainting.safetensors
-  out=Stable-diffusion/realisticVisionV40-inpainting.inpainting.safetensors
+  out=models/Stable-diffusion/realisticVisionV40-inpainting.inpainting.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV40_v40VAE.safetensors
-  out=Stable-diffusion/realisticVisionV40_v40VAE.safetensors
+  out=models/Stable-diffusion/realisticVisionV40_v40VAE.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
-  out=Stable-diffusion/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
+  out=models/Stable-diffusion/dreamlike-photoreal-2.0-inpainting.inpainting.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV51_v51VAE.safetensors
-  out=Stable-diffusion/realisticVisionV51_v51VAE.safetensors
+  out=models/Stable-diffusion/realisticVisionV51_v51VAE.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV51_v51VAE-inpainting.safetensors
-  out=Stable-diffusion/realisticVisionV51_v51VAE-inpainting.safetensors
+  out=models/Stable-diffusion/realisticVisionV51_v51VAE-inpainting.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/dreamlike-photoreal-2.0.ckpt
-  out=Stable-diffusion/dreamlike-photoreal-2.0.ckpt
+  out=models/Stable-diffusion/dreamlike-photoreal-2.0.ckpt
 https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt
-  out=VAE/vae-ft-mse-840000-ema-pruned.ckpt
+  out=models/VAE/vae-ft-mse-840000-ema-pruned.ckpt
 https://huggingface.co/runwayml/stable-diffusion-inpainting/resolve/main/sd-v1-5-inpainting.ckpt
-  out=Stable-diffusion/sd-v1-5-inpainting.ckpt
+  out=models/Stable-diffusion/sd-v1-5-inpainting.ckpt
 https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/GFPGANv1.4.pth
-  out=GFPGAN/GFPGANv1.4.pth
+  out=models/GFPGAN/GFPGANv1.4.pth
 https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth
-  out=RealESRGAN/RealESRGAN_x4plus.pth
+  out=models/RealESRGAN/RealESRGAN_x4plus.pth
 https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.2.4/RealESRGAN_x4plus_anime_6B.pth
-  out=RealESRGAN/RealESRGAN_x4plus_anime_6B.pth
+  out=models/RealESRGAN/RealESRGAN_x4plus_anime_6B.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/4xUltrasharp_4xUltrasharpV10.pth
-  out=ESRGAN/4xUltrasharp_4xUltrasharpV10.pth
+  out=models/ESRGAN/4xUltrasharp_4xUltrasharpV10.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/grounding-dino/groundingdino_swinb_cogcoor.pth
-  out=grounding-dino/groundingdino_swinb_cogcoor.pth
+  out=models/grounding-dino/groundingdino_swinb_cogcoor.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/grounding-dino/GroundingDINO_SwinB.cfg.py
-  out=grounding-dino/GroundingDINO_SwinB.cfg.py
+  out=models/grounding-dino/GroundingDINO_SwinB.cfg.py
 https://creatorloopmodels.blob.core.windows.net/sdmodels/loras/pytorch_lora_weights.safetensors
-  out=Lora/pytorch_lora_weights.safetensors
+  out=models/Lora/pytorch_lora_weights.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/sams/sam_vit_h_4b8939.pth
-  out=sams/sam_vit_h_4b8939.pth
+  out=models/sams/sam_vit_h_4b8939.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/creatorloop_nodes.py
-  out=custom_nodes/creatorloop_nodes.py
+  out=config/comfy/custom_nodes/creatorloop_nodes.py
