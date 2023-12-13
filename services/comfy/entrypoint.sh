@@ -20,6 +20,13 @@ MOUNTS["${ROOT}/output"]="/output/comfy"
 # The target directory where the repository will be cloned or updated
 target_dir="/app/data/config/comfy"
 
+if [ ! -d "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite" ]; then
+  echo "Adding ComfyUI-VideoHelperSuite..."
+  git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite"
+  echo "Installing requirements from the ComfyUI-VideoHelperSuite directory..."
+  pip install -r "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite/requirements.txt"
+fi
+
 # Custom nodes
 if [ ! -d "$target_dir/custom_nodes/ComfyUI_UltimateSDUpscale" ]; then
   echo "Adding ultimate sd upscale..."
@@ -44,6 +51,22 @@ if [ ! -d "$target_dir/custom_nodes/was-node-suite-comfyui" ]; then
   echo "Installing requirements from the cloned directory..."
   pip install -r "$target_dir/custom_nodes/was-node-suite-comfyui/requirements.txt"
 fi
+
+if [ ! -d "$target_dir/custom_nodes/ComfyUI_IPAdapter_plus" ]; then
+  echo "Adding ComfyUI_IPAdapter_plus..."
+  git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git "$target_dir/custom_nodes/ComfyUI_IPAdapter_plus"
+  echo "downloading ComfyUI_IPAdapter_plus models..."
+  wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/ComfyUI_IPAdapter_plus/models/ip-adapter-plus-face_sd15.bin -O "${target_dir}/custom_nodes/ComfyUI_IPAdapter_plus/models/ip-adapter-plus-face_sd15.bin"
+fi
+
+if [ ! -d "$target_dir/custom_nodes/ComfyUI-AnimateDiff-Evolved" ]; then
+  echo "Adding ComfyUI-AnimateDiff-Evolved..."
+  git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git "$target_dir/custom_nodes/ComfyUI-AnimateDiff-Evolved"
+  echo "downloading ComfyUI-AnimateDiff-Evolved models..."
+  wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm-Stabilized_mid.pth -O "${target_dir}/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm-Stabilized_mid.pth"
+  wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm_sd_v15.ckpt -O "${target_dir}/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm_sd_v15.ckpt"
+fi
+
 
 for to_path in "${!MOUNTS[@]}"; do
   set -Eeuo pipefail
