@@ -12,7 +12,8 @@ mkdir -vp /app/data/.cache \
   /app/data/models/LDSR \
   /app/data/models/VAE \
   /app/data/models/sams \
-  /app/data/models/grounding-dino
+  /app/data/models/grounding-dino \
+  /app/data/models/clip_vision 
 
 echo "Downloading, this might take a while..."
 

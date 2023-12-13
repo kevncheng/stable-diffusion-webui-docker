@@ -8,6 +8,10 @@ https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV51_v51V
   out=models/Stable-diffusion/realisticVisionV51_v51VAE.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV51_v51VAE-inpainting.safetensors
   out=models/Stable-diffusion/realisticVisionV51_v51VAE-inpainting.safetensors
+https://creatorloopmodels.blob.core.windows.net/sdmodels/realisticVisionV60B1_v60B1VAE.safetensors
+  out=models/Stable-diffusion/realisticVisionV60B1_v60B1VAE.safetensors
+https://creatorloopmodels.blob.core.windows.net/sdmodels/sdhk_v40.safetensors
+  out=models/Stable-diffusion/sdhk_v40.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/dreamlike-photoreal-2.0.ckpt
   out=models/Stable-diffusion/dreamlike-photoreal-2.0.ckpt
 https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt
@@ -28,7 +32,11 @@ https://creatorloopmodels.blob.core.windows.net/sdmodels/grounding-dino/Groundin
   out=models/grounding-dino/GroundingDINO_SwinB.cfg.py
 https://creatorloopmodels.blob.core.windows.net/sdmodels/loras/pytorch_lora_weights.safetensors
   out=models/Lora/pytorch_lora_weights.safetensors
+https://creatorloopmodels.blob.core.windows.net/sdmodels/loras/pytorch_lora_weights_1_5.safetensors
+  out=models/Lora/pytorch_lora_weights.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/sams/sam_vit_h_4b8939.pth
   out=models/sams/sam_vit_h_4b8939.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/creatorloop_nodes.py
   out=config/comfy/custom_nodes/creatorloop_nodes.py
+https://creatorloopmodels.blob.core.windows.net/sdmodels/clip_vision/model.safetensors
+  out=models/clip_vision/model.safetensors
