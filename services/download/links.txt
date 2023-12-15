@@ -33,7 +33,7 @@ https://creatorloopmodels.blob.core.windows.net/sdmodels/grounding-dino/Groundin
 https://creatorloopmodels.blob.core.windows.net/sdmodels/loras/pytorch_lora_weights.safetensors
   out=models/Lora/pytorch_lora_weights.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/loras/pytorch_lora_weights_1_5.safetensors
-  out=models/Lora/pytorch_lora_weights.safetensors
+  out=models/Lora/pytorch_lora_weights_1_5.safetensors
 https://creatorloopmodels.blob.core.windows.net/sdmodels/sams/sam_vit_h_4b8939.pth
   out=models/sams/sam_vit_h_4b8939.pth
 https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/creatorloop_nodes.py
