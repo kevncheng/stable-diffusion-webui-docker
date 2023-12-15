@@ -6,7 +6,18 @@ FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
-RUN apt-get update && apt-get install -y git wget ffmpeg libsm6 libxext6 && apt-get clean
+# Update and install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    libsm6 \
+    libxext6 \
+    && apt-get clean
+
+# Install ffmpeg from official sources
+RUN apt-get install -y ffmpeg
+
+RUN rm /opt/conda/bin/ffmpeg && ln -s /bin/ffmpeg /opt/conda/bin/ffmpeg
 
 ENV ROOT=/stable-diffusion
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git ${ROOT} && \

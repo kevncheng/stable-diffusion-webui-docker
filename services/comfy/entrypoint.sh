@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-mkdir -vp /app/data/config/comfy/custom_nodes
+mkdir -vp /data/config/comfy/custom_nodes
 
 declare -A MOUNTS
 
@@ -10,19 +10,27 @@ MOUNTS["/root/.cache"]="/app/data/.cache"
 MOUNTS["${ROOT}/input"]="/app/data/config/comfy/input"
 MOUNTS["${ROOT}/output"]="/output/comfy"
 
-# echo "Downloading, this might take a while..."
-# # Check if the directory already exists
-# if [ ! -d "/app/stablediffusion-pvc/models" ]; then
-#     # Create the directory if it doesn't exist
-#     mkdir -p "/app/stablediffusion-pvc/models"
-# fi
+for to_path in "${!MOUNTS[@]}"; do
+  echo "moutning now ${to_path}"
+  set -Eeuo pipefail
+  from_path="${MOUNTS[${to_path}]}"
+  rm -rf "${to_path}"
+  if [ ! -f "$from_path" ]; then
+    mkdir -vp "$from_path"
+  fi
+  mkdir -vp "$(dirname "${to_path}")"
+  ln -sT "${from_path}" "${to_path}"
+  echo Mounted $(basename "${from_path}")
+done
 
 # The target directory where the repository will be cloned or updated
-target_dir="/app/data/config/comfy"
+# custom nodes has to be in its own container, permission issue when using shared volume
+target_dir="/data/config/comfy"
 
 if [ ! -d "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite" ]; then
   echo "Adding ComfyUI-VideoHelperSuite..."
   git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite"
+   chmod -R 777 "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite"
   echo "Installing requirements from the ComfyUI-VideoHelperSuite directory..."
   pip install -r "$target_dir/custom_nodes/ComfyUI-VideoHelperSuite/requirements.txt"
 fi
@@ -39,6 +47,7 @@ fi
 if [ ! -d "$target_dir/custom_nodes/comfyui_segment_anything" ]; then
   echo "Adding comyfyui segment anything..."
   git clone https://github.com/storyicon/comfyui_segment_anything "$target_dir/custom_nodes/comfyui_segment_anything"
+  chmod -R 777 "$target_dir/custom_nodes/comfyui_segment_anything"
   # Install requirements from requirements.txt in the cloned directory
   echo "Installing requirements from the cloned directory..."
   pip install -r "$target_dir/custom_nodes/comfyui_segment_anything/requirements.txt"
@@ -47,6 +56,7 @@ fi
 if [ ! -d "$target_dir/custom_nodes/was-node-suite-comfyui" ]; then
   echo "Adding was-node-suite-comfyui..."
   git clone https://github.com/WASasquatch/was-node-suite-comfyui.git "$target_dir/custom_nodes/was-node-suite-comfyui"
+  chmod -R 777 "$target_dir/custom_nodes/was-node-suite-comfyui"
   # Install requirements from requirements.txt in the cloned directory
   echo "Installing requirements from the cloned directory..."
   pip install -r "$target_dir/custom_nodes/was-node-suite-comfyui/requirements.txt"
@@ -62,22 +72,13 @@ fi
 if [ ! -d "$target_dir/custom_nodes/ComfyUI-AnimateDiff-Evolved" ]; then
   echo "Adding ComfyUI-AnimateDiff-Evolved..."
   git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git "$target_dir/custom_nodes/ComfyUI-AnimateDiff-Evolved"
+  chmod -R 777 "$target_dir/custom_nodes/ComfyUI-AnimateDiff-Evolved"
   echo "downloading ComfyUI-AnimateDiff-Evolved models..."
   wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm-Stabilized_mid.pth -O "${target_dir}/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm-Stabilized_mid.pth"
   wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm_sd_v15.ckpt -O "${target_dir}/custom_nodes/ComfyUI-AnimateDiff-Evolved/models/mm_sd_v15.ckpt"
 fi
 
-
-for to_path in "${!MOUNTS[@]}"; do
-  set -Eeuo pipefail
-  from_path="${MOUNTS[${to_path}]}"
-  rm -rf "${to_path}"
-  if [ ! -f "$from_path" ]; then
-    mkdir -vp "$from_path"
-  fi
-  mkdir -vp "$(dirname "${to_path}")"
-  ln -sT "${from_path}" "${to_path}"
-  echo Mounted $(basename "${from_path}")
-done
+echo "downloading creator loop custom nodes..."
+wget https://creatorloopmodels.blob.core.windows.net/sdmodels/custom_nodes/creatorloop_nodes.py -O "${target_dir}/custom_nodes/creatorloop_nodes.py"
 
 exec "$@"

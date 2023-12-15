@@ -1,24 +1,24 @@
 a111:
-  base_path: /app/data
+  # base_path: /app/data
 
-  checkpoints: models/Stable-diffusion
-  configs: models/Stable-diffusion
-  vae: models/VAE
-  loras: models/Lora
-  grounding-dino: models/grounding-dino
-  sams: models/sams
+  checkpoints: /app/data/models/Stable-diffusion
+  configs: /app/data/models/Stable-diffusion
+  vae: /app/data/models/VAE
+  loras: /app/data/models/Lora
+  grounding-dino: /app/data/models/grounding-dino
+  sams: /app/data/models/sams
   upscale_models: |
-    models/RealESRGAN
-    models/ESRGAN
-    models/SwinIR
-    models/GFPGAN
-  hypernetworks: models/hypernetworks
-  controlnet: models/ControlNet
-  gligen: models/GLIGEN
-  clip: models/CLIPEncoder
-  embeddings: embeddings
+    /app/data/models/RealESRGAN
+    /app/data/models/ESRGAN
+    /app/data/models/SwinIR
+    /app/data/models/GFPGAN
+  hypernetworks: /app/data/models/hypernetworks
+  controlnet: /app/data/models/ControlNet
+  gligen: /app/data/models/GLIGEN
+  clip: /app/data/models/CLIPEncoder
+  embeddings: /app/data/embeddings
 
-  custom_nodes: config/comfy/custom_nodes
+  custom_nodes: /data/config/comfy/custom_nodes
 
   # TODO: I am unsure about these, need more testing
   # style_models: config/comfy/style_models
