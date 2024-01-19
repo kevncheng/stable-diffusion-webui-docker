@@ -15,9 +15,9 @@ mkdir -vp /data/.cache \
 
 echo "Downloading, this might take a while..."
 # Check if the directory already exists
-if [ ! -d "/app/stablediffusion-pvc/models" ]; then
+if [ ! -d "/app/data/models" ]; then
     # Create the directory if it doesn't exist
-    mkdir -p "/app/stablediffusion-pvc/models"
+    mkdir -p "/app/data/models"
 fi
 
 # aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /app/models --continue
@@ -35,12 +35,10 @@ fi
 
 if [ ! -d "$target_dir/stable-diffusion-webui-rembg" ]; then
   echo "Adding rembg extension..."
-  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg"
-fi
-
-if [ ! -d "$target_dir/PBRemTools" ]; then
-  echo "Adding PBRemTools extension..."
-  git clone https://github.com/mattyamonaca/PBRemTools.git "$target_dir/PBRemTools"
+  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg" && \
+  cd "$target_dir/stable-diffusion-webui-rembg" && \
+  git reset --hard 1c4a698cc829e760509121ffa6fd6e1d0a05a011 && \
+  cd ../../../../../../stable-diffusion
 fi
 
 if [ ! -d "$target_dir/sd-webui-controlnet" ]; then
@@ -88,13 +86,13 @@ MOUNTS["/root/.cache"]="/data/.cache"
 # Mount models to pvc
 # MOUNTS["/app/models"]="/data/models"
 # Create the symlink if the target directory exists
-if [ -d "/app/stablediffusion-pvc" ]; then
+if [ -d "/app/data" ]; then
     # ln -s /stable-diffusion/models /app/stablediffusion-pvc/models
 
     # Grant administrative permissions to the directory
-    chmod -R 777 "/app/stablediffusion-pvc"
+    chmod -R 777 "/app/data"
 else
-    echo "Error: Failed to create directory /app/stablediffusion-pvc"
+    echo "Error: Failed to create directory /app/data"
 fi
 
 MOUNTS["${ROOT}/embeddings"]="/data/embeddings"

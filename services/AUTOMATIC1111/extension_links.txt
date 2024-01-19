@@ -1,9 +1,3 @@
-https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
-  out=PBRemTools/models/sam_vit_h_4b8939.pth
-https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth
-  out=PBRemTools/models/sam_vit_l_0b3195.pth
-https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
-  out=PBRemTools/models/sam_vit_b_01ec64.pth
 https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny.pth
  out=sd-webui-controlnet/models/control_v11p_sd15_canny.pth
 https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble.pth
