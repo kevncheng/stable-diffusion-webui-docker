@@ -29,13 +29,13 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 WORKDIR /
 RUN --mount=type=cache,target=/root/.cache/pip \
-  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
-  cd stable-diffusion-webui && \
-  git reset --hard cf2772fab0af5573da775e7437e6acdca424f26e && \
+  git clone https://github.com/kevncheng/stable-diffusion.git && \
+  cd stable-diffusion && \
+  git checkout cl-docker && \
   pip install -r requirements_versions.txt
 
 
-ENV ROOT=/stable-diffusion-webui
+ENV ROOT=/stable-diffusion
 
 COPY --from=download /repositories/ ${ROOT}/repositories/
 RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/clip_interrogator/data/* ${ROOT}/interrogate
@@ -63,7 +63,7 @@ RUN \
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
-ENV CLI_ARGS='--allow-code --xformers --enable-insecure-extension-access --api --opt-sdp-attention --ckpt-dir /app/data/models/Stable-diffusion --esrgan-models-path /app/data/models/ESRGAN'
+ENV CLI_ARGS='--allow-code --xformers --no-download-sd-model --enable-insecure-extension-access --api --opt-sdp-attention --ckpt-dir /app/data/models/Stable-diffusion --esrgan-models-path /app/data/models/ESRGAN'
 EXPOSE 7860
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python -u webui.py --listen --port 7860 ${CLI_ARGS}
