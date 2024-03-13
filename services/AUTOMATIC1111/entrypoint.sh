@@ -15,6 +15,32 @@ cp -vrfTs /data/config/auto/scripts/ "${ROOT}/scripts/"
 # Set up config file
 python /docker/config.py /data/config/auto/config.json
 
+# The target directory where the repository will be cloned or updated
+target_dir="/data/config/auto/extensions"
+
+if [ ! -d "$target_dir/depthmap2mask" ]; then
+  echo "Adding depthmap2mask script..."
+   git clone https://github.com/Extraltodeus/depthmap2mask.git "$target_dir/depthmap2mask"
+fi
+
+if [ ! -d "$target_dir/stable-diffusion-webui-rembg" ]; then
+  echo "Adding rembg extension..."
+  git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui-rembg.git "$target_dir/stable-diffusion-webui-rembg"
+fi
+
+if [ ! -d "$target_dir/sd-webui-controlnet" ]; then
+  echo "Adding sd-webui-controlnet extension..."
+  git clone https://github.com/Mikubill/sd-webui-controlnet.git "$target_dir/sd-webui-controlnet"
+fi
+
+if [ ! -d "$target_dir/ultimate-upscale-for-automatic1111" ]; then
+  echo "Adding ultimate sd upscale..."
+  git clone https://github.com/Coyote-A/ultimate-upscale-for-automatic1111.git "$target_dir/ultimate-upscale-for-automatic1111"
+fi
+
+echo "Adding extension models..."
+aria2c -x 10 --disable-ipv6 --input-file /docker/extension_links.txt --dir $target_dir --auto-file-renaming=false --continue
+
 if [ ! -f /data/config/auto/ui-config.json ]; then
   echo '{}' >/data/config/auto/ui-config.json
 fi
@@ -32,7 +58,20 @@ rsync -a --info=NAME ${ROOT}/models/karlo/ /data/models/karlo/
 declare -A MOUNTS
 
 MOUNTS["/root/.cache"]="/data/.cache"
-MOUNTS["${ROOT}/models"]="/data/models"
+# MOUNTS["${ROOT}/models"]="/data/models"
+
+# ln -s "${ROOT}/models" /app/Stable-diffusion/models
+# Mount models to pvc
+# MOUNTS["/app/models"]="/data/models"
+# Create the symlink if the target directory exists
+if [ -d "/app/data" ]; then
+    # ln -s /stable-diffusion/models /app/stablediffusion-pvc/models
+
+    # Grant administrative permissions to the directory
+    chmod -R 777 "/app/data"
+else
+    echo "Error: Failed to create directory /app/data"
+fi
 
 MOUNTS["${ROOT}/embeddings"]="/data/embeddings"
 MOUNTS["${ROOT}/config.json"]="/data/config/auto/config.json"
