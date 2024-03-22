@@ -63,7 +63,7 @@ RUN \
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
-ENV CLI_ARGS='--allow-code --xformers --no-download-sd-model --enable-insecure-extension-access --api --opt-sdp-attention --ckpt-dir /app/data/models/Stable-diffusion --esrgan-models-path /app/data/models/ESRGAN'
+ENV CLI_ARGS='--allow-code --xformers --no-download-sd-model --api --opt-sdp-attention --ckpt-dir /app/data/models/Stable-diffusion --esrgan-models-path /app/data/models/ESRGAN --api-auth creatorloop:2m2GGATjmqR6'
 EXPOSE 7860
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python -u webui.py --listen --port 7860 ${CLI_ARGS}
